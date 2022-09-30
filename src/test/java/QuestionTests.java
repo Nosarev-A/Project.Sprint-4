@@ -17,7 +17,7 @@ public class QuestionTests {
 
     @Test
     public void checkQuestions() {
-        WebDriver driver = new FirefoxDriver();
+        WebDriver driver = new ChromeDriver();
         driver.get("https://qa-scooter.praktikum-services.ru/");
 //время ожидания 3 секунды
         new WebDriverWait(driver, 3)
