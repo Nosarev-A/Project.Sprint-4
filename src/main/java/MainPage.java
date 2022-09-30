@@ -10,7 +10,7 @@ class MainPage {
 // Заголовок раздела "Вопросы о важном"
     private By titleTextQuestions = By.className("Home_SubHeader__zwi_E");
 
-// Вопросы раздела (от 1ого до 8ого)
+// Вопросы раздела (с 1ого до 8ого)
     private By firstQuestion = By.id("accordion__heading-0");
     private By secondQuestion = By.id("accordion__heading-1");
     private By thirdQuestion = By.id("accordion__heading-2");
