@@ -14,7 +14,6 @@ import static org.hamcrest.CoreMatchers.is;
 public class QuestionTests {
 
     private WebDriver driver;
-
     @Test
     public void checkQuestions() {
         WebDriver driver = new ChromeDriver();
