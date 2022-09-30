@@ -1,4 +1,4 @@
-import org.junit.After;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import static org.hamcrest.CoreMatchers.containsString;
 
 
 public class OrderElementsTest {
@@ -16,13 +17,12 @@ public class OrderElementsTest {
 
     @Test
 
-    public void createOrder() {
+    public void createFirstOrder() {
         WebDriver driver = new ChromeDriver();
         driver.get("https://qa-scooter.praktikum-services.ru/");
 // время ожидания 3 сек
         new WebDriverWait(driver, 3)
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className("App_CookieButton__3cvqF")));
-
         OrderElements objOrderElements = new OrderElements(driver);
         objOrderElements.clickCookieButton();
 // клик на кнопку "Заказать"-------------------------------
@@ -36,20 +36,25 @@ public class OrderElementsTest {
 // заполнение второй страницы заказа
         objOrderElements.fillSecondPage(
                 "Домофон не работает");
-
 // подтверждение оформления заказа
         objOrderElements.clickYesButton();
+        String actualOrderText = objOrderElements.checkOrderIsDone();
+        String exceptedOrderText = "Заказ оформлен";
+        MatcherAssert.assertThat(actualOrderText, containsString(exceptedOrderText));
+        driver.quit();
+    }
+    @Test
 
-// Главная страница
+    public void createSecondOrder() {
+        WebDriver driver = new ChromeDriver();
         driver.get("https://qa-scooter.praktikum-services.ru/");
-
+        new WebDriverWait(driver, 3)
+                .until(ExpectedConditions.visibilityOfElementLocated(By.className("Home_FinishButton__1_cWm")));
+        OrderElements objOrderElements = new OrderElements(driver);
+        objOrderElements.clickCookieButton();
 // Скролл вниз
         WebElement element = driver.findElement(By.id("accordion__heading-0"));
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
-
-        new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("Home_FinishButton__1_cWm")));
-
 // Оформление заказа через нижнюю кнопку --------------------------
         objOrderElements.clickBottomOrderButton();
         objOrderElements.fillFirstPage(
@@ -60,7 +65,9 @@ public class OrderElementsTest {
         objOrderElements.fillSecondPage(
                 "Communication is disabled");
         objOrderElements.clickYesButton();
-
+        String actualOrderText = objOrderElements.checkOrderIsDone();
+        String exceptedOrderText = "Заказ оформлен";
+        MatcherAssert.assertThat(actualOrderText, containsString(exceptedOrderText));
         driver.quit();
     }
 

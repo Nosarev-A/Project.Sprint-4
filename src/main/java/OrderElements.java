@@ -45,7 +45,7 @@ class OrderElements {
     // Кнопка "Да"
     private By orderYesButton = By.xpath("//*[@class='Button_Button__ra12g Button_Middle__1CSJM' and contains(text(), 'Да')]");
     // "Заказ оформлен"
-    private By orderDoneHeader = By.className("Order_ModalHeader__3FDaJ");
+    private By orderDoneHeader = By.xpath("//div[@class='Order_ModalHeader__3FDaJ']");
 
 
 
@@ -55,6 +55,9 @@ class OrderElements {
         this.driver = driver;
     }
 
+    public String checkOrderIsDone() {
+        return driver.findElement(orderDoneHeader).getText();
+    }
     // Методы кликов на кнопки -----------------------------------------------
     public void clickCookieButton() {
         driver.findElement(cookieMessage).click();

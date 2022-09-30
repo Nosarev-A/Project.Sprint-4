@@ -1,11 +1,10 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 class MainPage {
     private WebDriver driver;
-
-    // Баннер-предупреждение об использовании Cookie
-    private By cookieMessage = By.className("App_CookieButton__3cvqF");
 
     // Заголовок раздела "Вопросы о важном"
     private By titleTextQuestions = By.className("Home_SubHeader__zwi_E");
@@ -22,6 +21,11 @@ class MainPage {
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
+    }
+
+    public void scrollPageDown() {
+        WebElement element = driver.findElement(By.id("accordion__heading-7"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
     }
 
 
@@ -76,9 +80,4 @@ class MainPage {
     public String textPanelEighth() {
         return driver.findElement(By.id("accordion__panel-7")).getText();
     }
-
-    public void clickCookieButton() {
-        driver.findElement(cookieMessage).click();
-    }
-
 }
